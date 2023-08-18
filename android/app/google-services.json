@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "203176417957",
+    "project_id": "socialv-flutter",
+    "storage_bucket": "socialv-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203176417957:android:6d2dde980112558149cb4c",
+        "android_client_info": {
+          "package_name": "com.iconic.socialv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203176417957-2jsm7p68m9cbgddc2bf97l3lu6b46vv0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iconic.socialv",
+            "certificate_hash": "3763cfef90eab764d176ec29963fe2bd743dbc41"
+          }
+        },
+        {
+          "client_id": "203176417957-c1slusna3l7vi8t5napabspi4jrm6rth.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iconic.socialv",
+            "certificate_hash": "f3e1e3ad181563a890e9aa328f52e3deae0d59ef"
+          }
+        },
+        {
+          "client_id": "203176417957-v36ens02rnhbnhl417ojosdhokb139ap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iconic.socialv",
+            "certificate_hash": "e1f5a153679fdfd0fed4d9005bcbf5c7b8d3ebc8"
+          }
+        },
+        {
+          "client_id": "203176417957-85qj4djghloja46aci7smcjtd701ea4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgYJs0fijqzbOGCzZ_HTM8-t7NTrjOSmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203176417957-85qj4djghloja46aci7smcjtd701ea4m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "203176417957-1kri6qh2edloe0ffvt1mfb8tv0vjhnsr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.iconic.socialv"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
