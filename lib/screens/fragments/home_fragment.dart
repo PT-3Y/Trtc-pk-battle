@@ -12,6 +12,9 @@ import 'package:socialv/screens/home/components/initial_home_component.dart';
 import 'package:socialv/screens/home/components/suggested_user_component.dart';
 import 'package:socialv/screens/post/components/post_component.dart';
 import 'package:socialv/screens/stories/component/home_story_component.dart';
+import 'package:socialv/Trtc/trtc_sdk_manager.dart';
+
+
 
 import '../../utils/app_constants.dart';
 
@@ -72,11 +75,13 @@ class _HomeFragmentState extends State<HomeFragment> with SingleTickerProviderSt
     
   }
 
+  
+
    Future<void> init() async {
     // =======================Fong 20230816=========================//
     String loginUserId = appStore.loginUserId;
     String loginName = appStore.loginName;
-    await TRTC_Service.instance.connectUser(loginUserId, loginName, token: '');
+    await TrtcSDKManager.instance.connectUser(loginUserId, loginName, token: '');
     //  ====================Fong end=================================//
   }
 

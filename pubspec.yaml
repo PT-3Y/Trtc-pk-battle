@@ -88,6 +88,8 @@ dependencies:
   lottie: ^2.3.2
   country_picker: ^2.0.20
   permission_handler: ^10.4.3
+  encrypt: ^5.0.1
+
 
   flutter_localizations:
     sdk: flutter

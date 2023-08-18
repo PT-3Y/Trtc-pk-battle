@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zego_express_engine/zego_express_engine.dart';
+// import 'package:zego_express_engine/zego_express_engine.dart';
 
-class ZegoLog {
-  factory ZegoLog() => _instance;
+class TrtcLogo {
+  factory TrtcLogo() => _instance;
   void clearnLog() {
     _logController.sink.add("clearn Log");
   }
@@ -19,31 +19,31 @@ class ZegoLog {
     _stream.listen(func);
   }
 
-  ZegoLog._() {
-    _logController = StreamController<String>();
-    _stream = _logController.stream.asBroadcastStream();
+  TrtcLogo._() {
+    // _logController = StreamController<String>();
+    // _stream = _logController.stream.asBroadcastStream();
 
-    ZegoExpressEngine.onApiCalledResult = (errorCode, funcName, info) {
-      ZegoLog().addLog(
-          '🚩 📥 onApiCalledResult, errorCode: $errorCode, funcName: $funcName, info: $info');
-    };
+    // ZegoExpressEngine.onApiCalledResult = (errorCode, funcName, info) {
+    //   TrtcLogo().addLog(
+    //       '🚩 📥 onApiCalledResult, errorCode: $errorCode, funcName: $funcName, info: $info');
+    // };
   }
-  static final ZegoLog _instance = ZegoLog._();
+  static final TrtcLogo _instance = TrtcLogo._();
 
   late StreamController<String> _logController;
   late Stream<String> _stream;
 }
 
-class ZegoLogView extends StatefulWidget {
-  const ZegoLogView({Key? key, this.logs}) : super(key: key);
+class TrtcLogoView extends StatefulWidget {
+  const TrtcLogoView({Key? key, this.logs}) : super(key: key);
 
   final List<String>? logs;
 
   @override
-  State<ZegoLogView> createState() => _ZegoLogViewState();
+  State<TrtcLogoView> createState() => _TrtcLogoViewState();
 }
 
-class _ZegoLogViewState extends State<ZegoLogView> {
+class _TrtcLogoViewState extends State<TrtcLogoView> {
   late List<String> _logs;
   late List<String> _showLogs;
   late bool _isDispose;
@@ -58,7 +58,7 @@ class _ZegoLogViewState extends State<ZegoLogView> {
     // _filer = "";
     _controller = ScrollController();
 
-    ZegoLog()._setListener(onUpdate);
+    TrtcLogo()._setListener(onUpdate);
 
     _isDispose = false;
   }
@@ -125,7 +125,7 @@ class _ZegoLogViewState extends State<ZegoLogView> {
     showDialog(
         context: context,
         builder: (context) {
-          return ZegoLogWidget(
+          return TrtcLogoWidget(
             key: ValueKey(DateTime.now()),
             logs: _logs,
             onFilter: (filter) {
@@ -143,8 +143,8 @@ class _ZegoLogViewState extends State<ZegoLogView> {
   }
 }
 
-class ZegoLogWidget extends StatefulWidget {
-  const ZegoLogWidget({Key? key, this.logs, this.onFilter, this.onClear})
+class TrtcLogoWidget extends StatefulWidget {
+  const TrtcLogoWidget({Key? key, this.logs, this.onFilter, this.onClear})
       : super(key: key);
 
   final List<String>? logs;
@@ -152,10 +152,10 @@ class ZegoLogWidget extends StatefulWidget {
   final Function()? onClear;
 
   @override
-  State<ZegoLogWidget> createState() => _ZegoLogWidgetState();
+  State<TrtcLogoWidget> createState() => _TrtcLogoWidgetState();
 }
 
-class _ZegoLogWidgetState extends State<ZegoLogWidget> {
+class _TrtcLogoWidgetState extends State<TrtcLogoWidget> {
   late List<String> _logs;
   late List<String> _showLogs;
   late bool _isDispose;
@@ -179,7 +179,7 @@ class _ZegoLogWidgetState extends State<ZegoLogWidget> {
 
     onFilter(true);
 
-    ZegoLog()._setListener(onUpdate);
+    TrtcLogo()._setListener(onUpdate);
 
     _isDispose = false;
   }

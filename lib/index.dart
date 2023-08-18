@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './utils/TxUtils.dart';
 import 'utils/constants1.dart' as constants;
 import './debug/GenerateTestUserSig.dart';
-import './TRTCChatSalonDemo/model/TRTCChatSalon.dart';
+import 'package:socialv/Trtc/TRTCChatSalonDemo/model/TRTCChatSalon.dart';
 import './i10n/localization_intl.dart';
 
 class IndexPage extends StatefulWidget {
