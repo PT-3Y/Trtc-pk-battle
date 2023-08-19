@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:socialv/models/groups/admin.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_video_view.dart';
 import 'package:tencent_trtc_cloud/tx_audio_effect_manager.dart';
@@ -15,32 +16,40 @@ import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/LiveTextButton.dart';
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/MusicSetting.dart';
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/PKUserList.dart';
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/PopUpMessageLIst.dart';
-import 'package:socialv/services/define.dart';
+import 'package:socialv/services/gami_define.dart';
 
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/SubVideoList.dart';
 import 'package:socialv/base/YunApiHelper.dart';
 import 'package:socialv/utils/TxUtils.dart';
+import 'package:socialv/Trtc/trtc_sdk_manager.dart';
+
 
 class LiveRoomPage extends StatefulWidget {
-  const LiveRoomPage({super.key, required this.roomID, required this.role});
+  const LiveRoomPage({super.key, required this.roomID, required this.role, this.isAdmin = false});
 
   @override
   _LiveRoomPageState createState() => _LiveRoomPageState();
-
+  final bool isAdmin;
   final String roomID;
   final TrtcLiveRole role;
+
 
 }
 
 bool useCdnFirst = false;
 
 class _LiveRoomPageState extends State<LiveRoomPage> {
+ 
+ String? userId = TrtcSDKManager.instance.localUser?.userId;
+  String? userName = TrtcSDKManager.instance.localUser?.userName;
+
+
   late TRTCLiveRoom trtcLiveCloud;
   late TXBeautyManager beautyManager;
   late TXAudioEffectManager audioEffectManager;
   final nameFocusNode = FocusNode();
   String roomTitle = "RoomTitle";
-  String userName = "test";
+  // String userName = "test";
   bool isStandardQuality = true;
   bool isNeedCreateRoom = false;
   bool isInRoom = false;
@@ -88,12 +97,12 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
     } else {
       String userId = await TxUtils.getLoginUserId();
       _currentOwnerId = userId;
-      String loginUserName = await TxUtils.getStorageByKey("loginUserName");
+      String? loginUserName = userName;
       String tmpName = loginUserName == ""
           ? userId == ""
               ? "test"
               : userId.replaceAll("：", "")
-          : loginUserName.replaceAll("：", "");
+          : loginUserName.toString().replaceAll("：", "");
       setState(() {
         userName = tmpName;
         roomTitle = tmpName + "的房间";
@@ -337,7 +346,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             }
           });
           trtcLiveCloud.stopPublish();
-          showErrorToast("你被管理员踢下主播", null);
+          showErrorToast("You were kicked off the host by the administrator", null);
         }
         break;
       case TRTCLiveRoomDelegate.onAnchorAccepted:
@@ -350,14 +359,14 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             isPKing = false;
             pkUserId = '';
           });
-          showErrorToast("主播拒绝跨房Pk请求", null);
+          showErrorToast("The anchor refuses the cross-room Pk request", null);
         }
         break;
       case TRTCLiveRoomDelegate.onRoomPKAccepted:
         {
           addMessageLog([
             MessageColor(params["userId"].toString(), Color(0xFFFCAF41)),
-            MessageColor(" 主播接受跨房Pk请求", null)
+            MessageColor(" The anchor accepts the cross-room Pk request", null)
           ]);
           safeSetState(() {
             isPKing = true;
@@ -375,7 +384,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             isPKing = false;
             pkUserId = '';
           });
-          showErrorToast("断开跨房 PK ", () {});
+          showErrorToast("Disconnect cross room PK ", () {});
         }
         break;
     }
@@ -402,9 +411,9 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
     });
     await trtcLiveCloud.startPublish("");
     addMessageLog([
-      MessageColor("主播同意 ", null),
+      MessageColor("The streamer agrees ", null),
       MessageColor(_currentLoginUser, Color(0xFF3074FD)),
-      MessageColor(" 连麦请求", null)
+      MessageColor(" Lianmai request", null)
     ]);
   }
 
@@ -416,7 +425,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
           title: Text((params["userName"] == null
                   ? params["userId"].toString()
                   : params["userName"].toString()) +
-              ' 发起PK请求'),
+              ' Initiate PK request'),
           actions: <Widget>[
             // ignore: deprecated_member_use
           IconButton(
@@ -465,7 +474,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
           title: Text((params["userName"] == null
                   ? params["userId"].toString()
                   : params["userName"].toString()) +
-              ' 发起连麦请求'),
+              ' Initiate a Lianmai request'),
           actions: <Widget>[
             // ignore: deprecated_member_use
             IconButton(
@@ -565,7 +574,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("确定退出PK"),
+          title: Text("OK to quit PK"),
           actions: <Widget>[
             // ignore: deprecated_member_use
            IconButton(
@@ -692,7 +701,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             roomList: _pkUserList,
             onRequestRoomPK: (roomId, ownerId) async {
               await trtcLiveCloud.requestRoomPK(roomId, ownerId);
-              TxUtils.showToast("已发起PK邀请，等待同意", context);
+              TxUtils.showToast("PK invitation has been initiated, waiting for approval", context);
               Navigator.of(context).pop(true);
             },
           );
@@ -709,7 +718,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
       isJoinAnchor = true;
     });
     trtcLiveCloud.requestJoinAnchor();
-    TxUtils.showToast("等待主播接受.....", context);
+    TxUtils.showToast("Wait for host to accept.....", context);
   }
 
   onLikeTap() {
@@ -836,7 +845,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               ),
             ),
             title: Text(
-              this.userName,
+              userName.toString(),
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
             subtitle: TextField(
@@ -1036,7 +1045,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
 
   Widget getBottomBtnList() {
     List<Widget> btnList = [];
-    if (widget.isAdmin) {
+    if (widget.role=='host') {
       btnList = [
         LiveImgButton(
           imgUrl: "assets/images/liveRoom/Comment.png",
@@ -1223,7 +1232,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 : Container(
                     color: Color.fromRGBO(0, 0, 0, 0.3),
                     child: Container(
-                      child: (!widget.isAdmin && !isOwerAvailable) ||
+                      child: (widget.isAdmin && !isOwerAvailable) ||
                               useCdnCurrent
                           ? Center(
                               child: Text(

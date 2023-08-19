@@ -12,7 +12,7 @@ class YunApiHelper {
       _url,
       queryParameters: {
         "method": "createRoom",
-        "appId": GenerateTestUserSig.sdkAppId,
+        "sdkAppId": GenerateTestUserSig.sdkAppId,
         "type": roomType,
         "roomId": roomId
       },

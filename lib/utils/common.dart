@@ -18,6 +18,8 @@ import 'package:socialv/models/members/member_response.dart';
 import 'package:socialv/models/posts/media_model.dart';
 import 'package:socialv/models/story/common_story_model.dart';
 import 'package:socialv/network/rest_apis.dart';
+import 'package:socialv/Trtc/Trtc_userinfo/Trtc_userinfo.dart';
+
 
 import 'app_constants.dart';
 
@@ -492,4 +494,28 @@ Future<void> getNotificationCount() async {
       getNotificationCount();
     });
   });
+}
+
+String getAvatarUrlFromUserId(String userId) {
+  String avatar = '';
+  List<MemberResponse> memberList = appStore.allMemberList;
+  for (MemberResponse member in memberList) {
+    if (member.id.toString() == userId) {
+      avatar = member.avatarUrls?.full.validate() ?? '';
+      break;
+    }
+  }
+  return avatar;
+}
+
+TrtcUserInfo getUserInfoFromUserId(String userId) {
+  String name = '';
+  List<MemberResponse> memberList = appStore.allMemberList;
+  for (MemberResponse member in memberList) {
+    if (member.id.toString() == userId) {
+      name = member.name ?? '';
+      break;
+    }
+  }
+  return TrtcUserInfo(userId: userId, userName: name);
 }

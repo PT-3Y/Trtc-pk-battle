@@ -5,15 +5,24 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:socialv/utils/TxUtils.dart';
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoom.dart';
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDef.dart';
-import 'package:socialv/base/YunApiHelper.dart';
+// import 'package:socialv/base/YunApiHelper.dart';
 import 'package:socialv/i10n/localization_intl.dart';
 import 'package:socialv/Trtc/trtc_sdk_manager.dart';
+import 'package:socialv/gami_utils/api_services.dart';
+import 'package:socialv/utils/common.dart';
+
+
+
 
 /*
  * 房间列表
  */
 class LiveRoomListPage extends StatefulWidget {
-  LiveRoomListPage({Key? key}) : super(key: key);
+  // LiveRoomListPage({Key? key}) : super(key: key);
+  const LiveRoomListPage({super.key, required this.controller});
+
+  final ScrollController controller;
+
 
   @override
   State<StatefulWidget> createState() => LiveRoomListPageState();
@@ -21,11 +30,16 @@ class LiveRoomListPage extends StatefulWidget {
 
 class LiveRoomListPageState extends State<LiveRoomListPage> {
   late TRTCLiveRoom trtcLiveRoomServer;
-  List<RoomInfo> roomInfList = [];
+  // List<RoomInfo> roomInfList = [];
 
 
   String? userId = TrtcSDKManager.instance.localUser!.userId;
   String? userName = TrtcSDKManager.instance.localUser!.userName;
+
+  List<dynamic> liveList = [];
+  List<dynamic> multiRoomList = [];
+  List<dynamic> singleRoomList = [];
+  List<dynamic> pkRoomList = [];
 
 
   openUrl(String url) async {
@@ -48,42 +62,84 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
     super.dispose();
   }
 
+
+    void separateRoomsByType() {
+    multiRoomList.clear();
+    singleRoomList.clear();
+    pkRoomList.clear();
+
+    for (var room in liveList) {  if (room['status'] == 'error111') return;
+
+      // final roomId = room['liveId'];
+
+      // if (roomId.startsWith('Room-group-')) {
+      //   multiRoomList.add(room);
+      //   print('--Added to multiRoomlist');
+      // } else if (roomId.startsWith('Room-solo-')) {
+      //   singleRoomList.add(room);
+      //   print('--Added to singleRoomlist');
+      // } else if (roomId.startsWith('Room-invite-') || roomId.startsWith('Room-random-')) {
+      //   pkRoomList.add(room);
+      //   print('--Added to pkRoomlist');
+      // }
+
+      
+    }
+  }
+
   getRoomList() async {
     trtcLiveRoomServer = await TRTCLiveRoom.sharedInstance();
-    String loginId = await TxUtils.getLoginUserId();
+    String loginId = userId.toString();
+    
     await trtcLiveRoomServer.login(
         GenerateTestUserSig.sdkAppId,
         loginId,
         await GenerateTestUserSig.genTestSig(loginId),
         TRTCLiveRoomConfig(useCDNFirst: false));
-    var roomIdls = await YunApiHelper.getRoomList(roomType: 'liveRoom');
-    if (roomIdls.isEmpty) {
+
+    //     isLoading = true;
+    // getAllLiveRooms().then((value) {
+    //   if (value[0]['status'] == 'error111') liveList = [];
+    //   else liveList = value;
+    //   print('Live lists ==> $value');
+    //   separateRoomsByType();
+    // }).catchError((e) {
+    //   toast(e.toString());
+    // });
+    // isLoading = false;
+    // setState(() {});
+    var liveList = await getAllLiveRooms();
+    // var roomIdls = [];
+    if (liveList.length!=0) {
       setState(() {
-        roomInfList = [];
+        liveList = liveList;
       });
       return;
     }
-    RoomInfoCallback resp = await trtcLiveRoomServer.getRoomInfos(roomIdls);
-    if (resp.code == 0) {
-      setState(() {
-        roomInfList = resp.list!;
-      });
-    } else {
-      TxUtils.showErrorToast(resp.desc, context);
-    }
+  // RoomInfoCallback resp = await trtcLiveRoomServer.getRoomInfos();
+  //   if (resp.code == 0) {
+  //     setState(() {
+  //       liveList = resp.list!;
+  //     });
+  //   } else {
+  //     TxUtils.showErrorToast(resp.desc, context);
+  //   }
   }
 
-  goRoomInfoPage(RoomInfo roomInfo) async {
-    String loginUserId = await TxUtils.getLoginUserId();
-    if (roomInfo.ownerId.toString() == loginUserId) {
+  goRoomInfoPage( roomInfo) async {
+    String? loginUserId = userId;
+    if (roomInfo.userId.toString() == loginUserId) {
       Navigator.pushReplacementNamed(
         context,
         "/liveRoom/roomAnchor",
         arguments: {
-          "ownerId": roomInfo.ownerId,
-          "roomName": roomInfo.roomName,
-          'roomId': roomInfo.roomId,
-          'isNeedCreateRoom': false,
+        'liveId': roomInfo.liveId,
+        "userId": roomInfo.userId,
+        "roomName": roomInfo.roomName,
+        "userName": roomInfo.userName,
+        'isHost': roomInfo.isHost, 
+        'liveStatus':roomInfo.liveStatus,
+        'isNeedCreateRoom': false,
         },
       );
       return;
@@ -92,15 +148,19 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
       context,
       "/liveRoom/roomAudience",
       arguments: {
-        'roomId': roomInfo.roomId,
-        "ownerId": roomInfo.ownerId,
+        'liveId': roomInfo.liveId,
+        "userId": roomInfo.userId,
         "roomName": roomInfo.roomName,
-        'isNeedCreateRoom': false,
+        "userName": roomInfo.userName,
+        'isHost': roomInfo.isHost, 
+        'liveStatus':roomInfo.liveStatus,
+        'isNeedCreateRoom': true,
+
       },
     );
   }
 
-  Widget buildRoomInfo(RoomInfo info) {
+  Widget buildRoomInfo(info) {
     return InkWell(
       onTap: () {
         goRoomInfoPage(info);
@@ -114,9 +174,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 image: DecorationImage(
                   image: NetworkImage(
-                    info.coverUrl != null && info.coverUrl != ''
-                        ? info.coverUrl
-                        : TxUtils.getRandoAvatarUrl(),
+                    getAvatarUrlFromUserId(info.userId)
                   ),
                   fit: BoxFit.fitWidth,
                 )),
@@ -150,7 +208,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  (info.ownerName == null ? info.ownerId : info.ownerName)!,
+                  (info.userName == null ? info.ownerId : info.userName)!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -186,7 +244,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
 
   @override
   Widget build(BuildContext context) {
-    int roomCount = roomInfList.length;
+    int roomCount = liveList.length;
 
     return Scaffold(
       appBar: AppBar(
@@ -262,7 +320,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        RoomInfo info = roomInfList[index];
+                        var info = liveList[index];
                         return buildRoomInfo(info);
                       },
                       childCount: roomCount,

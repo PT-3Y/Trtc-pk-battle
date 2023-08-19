@@ -22,6 +22,8 @@ import 'package:socialv/screens/profile/screens/member_profile_screen.dart';
 import 'package:socialv/screens/shop/screens/shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
 import 'package:socialv/utils/cached_network_image.dart';
+import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/list/LiveRoomList.dart';
+
 
 import '../utils/chat_reaction_list.dart';
 import 'messages/screens/message_screen.dart';
@@ -68,6 +70,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   Future<void> init() async {
     appFragments.addAll([
       HomeFragment(controller: _controller),
+      LiveRoomListPage(controller: _controller),
       SearchFragment(controller: _controller),
       ForumsFragment(controller: _controller),
       NotificationFragment(controller: _controller),
@@ -483,7 +486,7 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                           FloatingActionButton(
                             onPressed: () {
                               messageStore.setMessageCount(0);
-                              MessageScreen().launch(context);
+                              LiveRoomListPage().launch(context);
                             },
                             child: cachedImage(ic_chat, width: 26, height: 26, fit: BoxFit.cover, color: Colors.white),
                             backgroundColor: context.primaryColor,

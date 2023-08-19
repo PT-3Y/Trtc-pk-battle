@@ -1,4 +1,5 @@
 // 关键类型定义
+import 'package:socialv/Trtc/Trtc_userinfo/Trtc_userinfo.dart';
 
 class ActionCallback {
   /// 错误码
@@ -110,21 +111,4 @@ class UserListCallback {
 
   UserListCallback(
       {this.code = 0, this.desc = '', this.list, this.nextSeq = 0});
-}
-
-class TrtcUserInfo {
-  /// 用户唯一标识
-  String userId;
-
-  /// 用户昵称
-  String? userName;
-
-  /// 用户头像
-  String? userAvatar;
-
-  TrtcUserInfo({
-    required this.userId,
-    this.userName,
-    this.userAvatar,
-  });
 }

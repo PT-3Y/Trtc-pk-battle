@@ -116,6 +116,9 @@ abstract class AppStoreBase with Store {
   int? isShopEnable = 0;
 
   @observable
+  List<MemberResponse> allMemberList = [];
+
+  @observable
   List<MemberResponse> recentMemberSearchList = [];
 
   @observable

@@ -2,6 +2,8 @@
 
 // import 'socialv//zego_express_service.dart';
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDef.dart';
+import 'package:socialv/Trtc/Trtc_userinfo/Trtc_userinfo.dart';
+
 
 class TrtcSDKManager {
   TrtcSDKManager._internal();
