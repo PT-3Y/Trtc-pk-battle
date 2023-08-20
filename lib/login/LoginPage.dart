@@ -4,8 +4,8 @@ import 'package:permission_handler/permission_handler.dart';
 import '../utils/TxUtils.dart';
 import '../utils/constants1.dart' as constants;
 import '../debug/GenerateTestUserSig.dart';
-import 'package:socialv/Trtc/TRTCChatSalonDemo/model/TRTCChatSalon.dart';
-import 'package:socialv/Trtc/TRTCChatSalonDemo/model/TRTCChatSalonDef.dart';
+import 'package:socialv/Trtc/TRTCChatSalon/model/TRTCChatSalon.dart';
+import 'package:socialv/Trtc/TRTCChatSalon/model/TRTCChatSalonDef.dart';
 import '../i10n/localization_intl.dart';
 
 /*

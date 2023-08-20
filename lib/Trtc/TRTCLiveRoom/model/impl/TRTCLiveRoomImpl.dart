@@ -15,7 +15,7 @@ import 'package:tencent_im_sdk_plugin/models/v2_tim_group_member_info.dart';
 import 'package:tencent_im_sdk_plugin/models/v2_tim_group_member_info_result.dart';
 import 'package:tencent_im_sdk_plugin/models/v2_tim_message.dart';
 import 'package:tencent_im_sdk_plugin/models/v2_tim_user_full_info.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDef.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoomDef.dart';
 
 import '../TRTCLiveRoom.dart';
 import '../TRTCLiveRoomDelegate.dart';

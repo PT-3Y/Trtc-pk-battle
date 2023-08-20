@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:socialv/utils/TxUtils.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:socialv/debug/GenerateTestUserSig.dart';
-import '../../../TRTCChatSalonDemo/model/TRTCChatSalon.dart';
+import '../../../TRTCChatSalon/model/TRTCChatSalon.dart';
 import 'package:socialv/i10n/localization_intl.dart';
 
 class VoiceRoomCreatePage extends StatefulWidget {

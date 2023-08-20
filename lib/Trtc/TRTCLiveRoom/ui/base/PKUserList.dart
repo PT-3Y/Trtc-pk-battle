@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDef.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoomDef.dart';
 import 'package:socialv/utils/TxUtils.dart';
 
 import 'LiveTextButton.dart';

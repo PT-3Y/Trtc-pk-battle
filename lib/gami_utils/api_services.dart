@@ -248,10 +248,11 @@ Future<List<dynamic>> getAllLiveRooms() async {
   final url = Uri.parse('https://intoonedweekly.com/api/get_all_rooms.php');
   final response = await http.get(url);
 
-  if (response.statusCode == 201) {
+
+  if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
     // Process the response data
-    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>room lists'+data["data"]);
+    print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>room lists  ' +data.toString());
 
     if (data["status"] == "error" || data["msg"] == "no stream found!") {
       return [];

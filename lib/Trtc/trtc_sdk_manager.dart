@@ -1,7 +1,7 @@
 // import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDef.dart';
 
 // import 'socialv//zego_express_service.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDef.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoomDef.dart';
 import 'package:socialv/Trtc/Trtc_userinfo/Trtc_userinfo.dart';
 
 

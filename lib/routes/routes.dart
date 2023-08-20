@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:socialv/Trtc/TRTCCallingDemo/ui/base/CallingScenes.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/list/LiveRoomList.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/room/LiveRoomPage.dart';
-import 'package:socialv/Trtc/TRTCChatSalonDemo/ui/list/VoiceRoomList.dart';
-import 'package:socialv/Trtc/TRTCChatSalonDemo/ui/list/VoiceRoomCreate.dart';
-import 'package:socialv/Trtc/TRTCChatSalonDemo/ui/room/VoiceRoomPage.dart';
+import 'package:socialv/Trtc/TRTCCalling/ui/base/CallingScenes.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/list/LiveRoomList.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/room/LiveRoomPage.dart';
+import 'package:socialv/Trtc/TRTCChatSalon/ui/list/VoiceRoomList.dart';
+import 'package:socialv/Trtc/TRTCChatSalon/ui/list/VoiceRoomCreate.dart';
+import 'package:socialv/Trtc/TRTCChatSalon/ui/room/VoiceRoomPage.dart';
 import '../index.dart';
 import '../login/LoginPage.dart';
-import 'package:socialv/Trtc/TRTCChatSalonDemo/ui/base/UserEnum.dart';
-import 'package:socialv/Trtc/TRTCCallingDemo/ui/TRTCCallingContact.dart';
-import 'package:socialv/Trtc/TRTCCallingDemo/ui/VideoCall/TRTCCallingVideo.dart';
+import 'package:socialv/Trtc/TRTCChatSalon/ui/base/UserEnum.dart';
+import 'package:socialv/Trtc/TRTCCalling/ui/TRTCCallingContact.dart';
+import 'package:socialv/Trtc/TRTCCalling/ui/VideoCall/TRTCCallingVideo.dart';
 import 'package:socialv/Trtc/TRTCMeeting/ui/TRTCMeetingIndex.dart';
 import 'package:socialv/Trtc/TRTCMeeting/ui/TRTCMeetingRoom.dart';
 

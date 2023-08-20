@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/Trtc/TRTCChatSalonDemo/model/TRTCChatSalonDelegate.dart';
+import 'package:socialv/Trtc/TRTCChatSalon/model/TRTCChatSalonDelegate.dart';
 import 'package:socialv/base/YunApiHelper.dart';
 import 'package:socialv/utils/TxUtils.dart';
 import '../widget/RoomBottomBar.dart';

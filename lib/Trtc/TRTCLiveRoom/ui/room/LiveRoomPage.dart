@@ -5,20 +5,20 @@ import 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_video_view.dart';
 import 'package:tencent_trtc_cloud/tx_audio_effect_manager.dart';
 import 'package:tencent_trtc_cloud/tx_beauty_manager.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoom.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDef.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/model/TRTCLiveRoomDelegate.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/FavoriteAnimation.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/FilterSetting.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/LiveImgButton.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/LiveMessageList.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/LiveTextButton.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/MusicSetting.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/PKUserList.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoom.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoomDef.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoomDelegate.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/FavoriteAnimation.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/FilterSetting.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/LiveImgButton.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/LiveMessageList.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/LiveTextButton.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/MusicSetting.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/PKUserList.dart';
 import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/PopUpMessageLIst.dart';
 import 'package:socialv/services/gami_define.dart';
 
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/base/SubVideoList.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/base/SubVideoList.dart';
 import 'package:socialv/base/YunApiHelper.dart';
 import 'package:socialv/utils/TxUtils.dart';
 import 'package:socialv/Trtc/trtc_sdk_manager.dart';
@@ -288,6 +288,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
         break;
       case TRTCLiveRoomDelegate.onAudienceEnter:
         {
+          
           safeSetState(() {
             _onLineUserCount = _onLineUserCount + 1;
           });

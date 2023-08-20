@@ -22,7 +22,7 @@ import 'package:socialv/screens/profile/screens/member_profile_screen.dart';
 import 'package:socialv/screens/shop/screens/shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
 import 'package:socialv/utils/cached_network_image.dart';
-import 'package:socialv/Trtc/TRTCLiveRoomDemo/ui/list/LiveRoomList.dart';
+import 'package:socialv/Trtc/TRTCLiveRoom/ui/list/LiveRoomList.dart';
 
 
 import '../utils/chat_reaction_list.dart';
@@ -70,7 +70,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
   Future<void> init() async {
     appFragments.addAll([
       HomeFragment(controller: _controller),
-      LiveRoomListPage(controller: _controller),
       SearchFragment(controller: _controller),
       ForumsFragment(controller: _controller),
       NotificationFragment(controller: _controller),
