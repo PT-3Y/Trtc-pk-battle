@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:socialv/utils/TxUtils.dart';
+import '../../../../utils/TxUtils.dart';
 import '../../../TRTCChatSalon/model/TRTCChatSalon.dart';
 import '../../../TRTCChatSalon/model/TRTCChatSalonDef.dart';
-import 'package:socialv/base/YunApiHelper.dart';
-import 'package:socialv/i10n/localization_intl.dart';
+import '../../../../base/YunApiHelper.dart';
+import '../../../../i10n/localization_intl.dart';
 
 /*
  * 房间列表

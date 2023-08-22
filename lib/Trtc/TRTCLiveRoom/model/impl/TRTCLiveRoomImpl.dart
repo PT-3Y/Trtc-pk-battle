@@ -1,20 +1,19 @@
 import 'dart:convert';
-import 'package:socialv/Trtc/Trtc_userinfo/Trtc_userinfo.dart';
 
-import 'package:tencent_im_sdk_plugin/enum/V2TimGroupListener.dart';
-import 'package:tencent_im_sdk_plugin/enum/V2TimSimpleMsgListener.dart';
-import 'package:tencent_im_sdk_plugin/enum/group_add_opt_type.dart';
-import 'package:tencent_im_sdk_plugin/enum/group_member_filter_enum.dart';
-import 'package:tencent_im_sdk_plugin/enum/log_level_enum.dart';
-import 'package:tencent_im_sdk_plugin/enum/message_priority.dart';
-import 'package:tencent_im_sdk_plugin/enum/message_priority_enum.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_group_info.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_group_info_result.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_group_member_full_info.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_group_member_info.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_group_member_info_result.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_message.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_user_full_info.dart';
+import 'package:tencent_cloud_chat_sdk/enum/V2TimGroupListener.dart';
+import 'package:tencent_cloud_chat_sdk/enum/V2TimSimpleMsgListener.dart';
+import 'package:tencent_cloud_chat_sdk/enum/group_add_opt_type.dart';
+import 'package:tencent_cloud_chat_sdk/enum/group_member_filter_enum.dart';
+import 'package:tencent_cloud_chat_sdk/enum/log_level_enum.dart';
+import 'package:tencent_cloud_chat_sdk/enum/message_priority.dart';
+import 'package:tencent_cloud_chat_sdk/enum/message_priority_enum.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_group_info.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_group_info_result.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_group_member_full_info.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_group_member_info.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_group_member_info_result.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_message.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_user_full_info.dart';
 import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoomDef.dart';
 
 import '../TRTCLiveRoom.dart';
@@ -26,12 +25,12 @@ import 'package:tencent_trtc_cloud/tx_audio_effect_manager.dart';
 import 'package:tencent_trtc_cloud/tx_device_manager.dart';
 
 //im sdk
-import 'package:tencent_im_sdk_plugin/tencent_im_sdk_plugin.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_value_callback.dart';
-import 'package:tencent_im_sdk_plugin/manager/v2_tim_manager.dart';
-import 'package:tencent_im_sdk_plugin/enum/V2TimSDKListener.dart';
-import 'package:tencent_im_sdk_plugin/enum/V2TimSignalingListener.dart';
-import 'package:tencent_im_sdk_plugin/models/v2_tim_callback.dart';
+import 'package:tencent_cloud_chat_sdk/tencent_im_sdk_plugin.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_value_callback.dart';
+import 'package:tencent_cloud_chat_sdk/manager/v2_tim_manager.dart';
+import 'package:tencent_cloud_chat_sdk/enum/V2TimSDKListener.dart';
+import 'package:tencent_cloud_chat_sdk/enum/V2TimSignalingListener.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_callback.dart';
 
 class TRTCLiveRoomImpl extends TRTCLiveRoom {
   String logTag = "TRTCLiveRoomImpl";
@@ -265,13 +264,13 @@ class TRTCLiveRoomImpl extends TRTCLiveRoom {
         await timManager.getUsersInfo(userIDList: mAnchorList);
 
     if (res.code == 0) {
-      List<V2TimUserFullInfo> tuserInfo = res.data!;
-      List<TrtcUserInfo> newInfo = [];
-      for (var i = 0; i < tuserInfo.length; i++) {
-        newInfo.add(TrtcUserInfo(
-            userId: tuserInfo[i].userID!,
-            userName: tuserInfo[i].nickName!,
-            userAvatar: tuserInfo[i].faceUrl!));
+      List<V2TimUserFullInfo> userInfo = res.data!;
+      List<UserInfo> newInfo = [];
+      for (var i = 0; i < userInfo.length; i++) {
+        newInfo.add(UserInfo(
+            userId: userInfo[i].userID!,
+            userName: userInfo[i].nickName!,
+            userAvatar: userInfo[i].faceUrl!));
       }
       return UserListCallback(
           code: 0, desc: 'get archorInfo success.', list: newInfo);
@@ -293,12 +292,12 @@ class TRTCLiveRoomImpl extends TRTCLiveRoom {
     }
     List<V2TimGroupMemberFullInfo?> memberInfoList =
         memberRes.data!.memberInfoList!;
-    List<TrtcUserInfo> newInfo = [];
+    List<UserInfo> newInfo = [];
     for (var i = 0; i < memberInfoList.length; i++) {
-      newInfo.add(TrtcUserInfo(
+      newInfo.add(UserInfo(
           userId: memberInfoList[i]!.userID,
-          userName: memberInfoList[i]?.nickName,
-          userAvatar: memberInfoList[i]?.faceUrl));
+          userName: memberInfoList[i]!.nickName,
+          userAvatar: memberInfoList[i]!.faceUrl));
     }
     return UserListCallback(
         code: 0,
@@ -322,6 +321,10 @@ class TRTCLiveRoomImpl extends TRTCLiveRoom {
     V2TimValueCallback<List<V2TimGroupInfoResult>> res = await timManager
         .getGroupManager()
         .getGroupsInfo(groupIDList: roomIdList);
+
+    // print('++++++@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+++++++' +
+    //     res.code.toString());
+
     if (res.code != 0) {
       return RoomInfoCallback(code: res.code, desc: res.desc);
     }
@@ -330,9 +333,15 @@ class TRTCLiveRoomImpl extends TRTCLiveRoom {
 
     List<RoomInfo> newInfo = [];
     for (var i = 0; i < listInfo.length; i++) {
+      print('++++++@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+++++++' +
+          listInfo[i].resultCode.toString());
+
       if (listInfo[i].resultCode == 0) {
-        //兼容获取不到群id信息的情况
+        // 兼容获取不到群id信息的情况
         V2TimGroupInfo groupInfo = listInfo[i].groupInfo!;
+        print('++++++@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+++++++' +
+            listInfo[i].groupInfo!.groupID.toString());
+
         newInfo.add(RoomInfo(
             roomId: int.parse(groupInfo.groupID),
             roomName: groupInfo.groupName,

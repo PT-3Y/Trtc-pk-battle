@@ -1,5 +1,4 @@
 // 关键类型定义
-import 'package:socialv/Trtc/Trtc_userinfo/Trtc_userinfo.dart';
 
 class ActionCallback {
   /// 错误码
@@ -90,7 +89,7 @@ class MemberListCallback {
   /// nextSeq	分页拉取标志，第一次拉取填0，回调成功如果 nextSeq 不为零，需要分页，传入再次拉取，直至为0。
   int nextSeq;
 
-  List<TrtcUserInfo>? list;
+  List<UserInfo>? list;
 
   MemberListCallback(
       {this.code = 0, this.desc = '', this.nextSeq = 0, this.list});
@@ -104,11 +103,28 @@ class UserListCallback {
   String desc;
 
   /// 用户信息列表
-  List<TrtcUserInfo>? list;
+  List<UserInfo>? list;
 
   /// nextSeq	分页拉取标志，第一次拉取填0，回调成功如果 nextSeq 不为零，需要分页，传入再次拉取，直至为0。
   int nextSeq;
 
   UserListCallback(
       {this.code = 0, this.desc = '', this.list, this.nextSeq = 0});
+}
+
+class UserInfo {
+  /// 用户唯一标识
+  String userId;
+
+  /// 用户昵称
+  String? userName;
+
+  /// 用户头像
+  String? userAvatar;
+
+  UserInfo({
+    required this.userId,
+    this.userName,
+    this.userAvatar,
+  });
 }

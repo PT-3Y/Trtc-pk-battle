@@ -3,11 +3,11 @@
  */
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialv/utils/TxUtils.dart';
+import '../../../../utils/TxUtils.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:socialv/debug/GenerateTestUserSig.dart';
+import '../../../../debug/GenerateTestUserSig.dart';
 import '../../../TRTCChatSalon/model/TRTCChatSalon.dart';
-import 'package:socialv/i10n/localization_intl.dart';
+import '../../../../i10n/localization_intl.dart';
 
 class VoiceRoomCreatePage extends StatefulWidget {
   VoiceRoomCreatePage({Key? key}) : super(key: key);

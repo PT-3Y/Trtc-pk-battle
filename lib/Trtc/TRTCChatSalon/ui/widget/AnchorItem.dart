@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/utils/TxUtils.dart';
-import 'package:socialv/i10n/localization_intl.dart';
+import '../../../../i10n/localization_intl.dart';
 
 class AnchorItem extends StatefulWidget {
   AnchorItem({

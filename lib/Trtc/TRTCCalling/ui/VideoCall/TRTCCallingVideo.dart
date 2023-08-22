@@ -451,7 +451,7 @@ class _TRTCCallingVideoState extends State<TRTCCallingVideo> {
                 :
                 // _callingScenes == CallingScenes.VideoOneVOne
                 //     ? ExtendButton(
-                //         imgUrl: "assets/demo/images/callingDemo/switchToAudio.png",
+                //         imgUrl: "assets/images/callingDemo/switchToAudio.png",
                 //         imgHieght: 18,
                 //         imgColor: Color.fromRGBO(125, 123, 123, 1.0),
                 //         tips: "切到语音通话",

@@ -219,7 +219,7 @@ class _MusicSettingState extends State<MusicSetting> {
           ),
           getMusicSelectWidget(),
           getRowSlider(
-            title: "音乐音量",
+            title: "volume",
             value: musicVolume,
             onChange: (double value) {
               setState(() {
@@ -239,7 +239,7 @@ class _MusicSettingState extends State<MusicSetting> {
             },
           ),
           getRowSlider(
-            title: "音乐升降调",
+            title: "musical pitch",
             value: musicPitch,
             min: -1,
             max: 1,
@@ -349,7 +349,7 @@ class _RowImgSelectWidgetState extends State<RowImgSelectWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: widget.bntList.map((ImgItemInfo bntInfo) {
-        String imgUrl = "assets/images/liveRoom/music/";
+        String imgUrl = "assets/demo/images/liveRoom/music/";
         bool itemIsSelect = false;
         if (_selectImgKeyValue == bntInfo.imgKey) {
           itemIsSelect = true;

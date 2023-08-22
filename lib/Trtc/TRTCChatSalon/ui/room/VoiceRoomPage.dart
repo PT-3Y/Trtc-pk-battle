@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:socialv/Trtc/TRTCChatSalon/model/TRTCChatSalonDelegate.dart';
 import 'package:socialv/base/YunApiHelper.dart';
-import 'package:socialv/utils/TxUtils.dart';
+import '../../../../utils/TxUtils.dart';
 import '../widget/RoomBottomBar.dart';
 import '../widget/AnchorItem.dart';
 import '../widget/AudienceItem.dart';
@@ -11,7 +11,7 @@ import '../widget/DescriptionTitle.dart';
 import '../base/UserEnum.dart';
 import '../../model/TRTCChatSalon.dart';
 import '../../model/TRTCChatSalonDef.dart';
-import 'package:socialv/i10n/localization_intl.dart';
+import '../../../../i10n/localization_intl.dart';
 
 /*
  *  房间界面
@@ -392,11 +392,11 @@ class VoiceRoomPageState extends State<VoiceRoomPage>
         roomName: roomName,
       ),
     );
-    if (resp.code == 0) {
-      await YunApiHelper.createRoom(roomId.toString());
-    } else {
-      TxUtils.showErrorToast('createRoom:' + resp.desc, context);
-    }
+    // if (resp.code == 0) {
+    //   await YunApiHelper.createRoom(roomId.toString());
+    // } else {
+    //   TxUtils.showErrorToast('createRoom:' + resp.desc, context);
+    // }
   }
 
   //获取主播列表
@@ -617,18 +617,18 @@ class VoiceRoomPageState extends State<VoiceRoomPage>
                     style: TextStyle(color: Color.fromRGBO(0, 98, 227, 1)),
                   ),
                   onPressed: () {
-                    if (userType == UserType.Administrator) {
-                      YunApiHelper.destroyRoom(currentRoomId.toString())
-                          .then((value) {
-                        trtcVoiceRoom.destroyRoom().then((value) {
-                          Navigator.of(context).pop(true);
-                        });
-                      });
-                    } else {
-                      trtcVoiceRoom.exitRoom().then((value) {
-                        Navigator.of(context).pop(true);
-                      });
-                    }
+                    // if (userType == UserType.Administrator) {
+                    //   YunApiHelper.destroyRoom(currentRoomId.toString())
+                    //       .then((value) {
+                    //     trtcVoiceRoom.destroyRoom().then((value) {
+                    //       Navigator.of(context).pop(true);
+                    //     });
+                    //   });
+                    // } else {
+                    trtcVoiceRoom.exitRoom().then((value) {
+                      Navigator.of(context).pop(true);
+                    });
+                    // }
                   },
                 ),
               ],
@@ -727,10 +727,10 @@ class VoiceRoomPageState extends State<VoiceRoomPage>
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios), //color: Colors.black
           onPressed: () async {
-            bool isOk = (await this.showExitConfirmDialog())!;
-            if (isOk) {
-              Navigator.pushReplacementNamed(context, '/chatSalon/list');
-            }
+            // bool isOk = (await this.showExitConfirmDialog())!;
+            // if (isOk) {
+            Navigator.pushReplacementNamed(context, '/chatSalon/list');
+            // }
           },
         ),
         centerTitle: true,
@@ -771,7 +771,8 @@ class VoiceRoomPageState extends State<VoiceRoomPage>
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: DescriptionTitle("assets/demo/images/Anchor_ICON.png",
+                      child: DescriptionTitle(
+                          "assets/demo/images/Anchor_ICON.png",
                           Languages.of(context)!.anchor),
                     ),
                     this.getAnchorListWidget(context),

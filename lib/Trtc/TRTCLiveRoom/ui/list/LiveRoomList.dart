@@ -2,19 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:socialv/debug/GenerateTestUserSig.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:socialv/utils/TxUtils.dart';
-import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoom.dart';
-import 'package:socialv/Trtc/TRTCLiveRoom/model/TRTCLiveRoomDef.dart';
-// import 'package:socialv/base/YunApiHelper.dart';
-import 'package:socialv/i10n/localization_intl.dart';
-import 'package:socialv/Trtc/trtc_sdk_manager.dart';
-import 'package:socialv/gami_utils/api_services.dart';
-import 'package:socialv/utils/common.dart';
-import 'package:socialv/utils/cached_network_image.dart';
-
-
-
-
+import '../../../../utils/TxUtils.dart';
+import '../../model/TRTCLiveRoom.dart';
+import '../../model/TRTCLiveRoomDef.dart';
+// import '../../../base/YunApiHelper.dart';
+import '../../../../i10n/localization_intl.dart';
 
 /*
  * 房间列表
@@ -22,30 +14,13 @@ import 'package:socialv/utils/cached_network_image.dart';
 class LiveRoomListPage extends StatefulWidget {
   LiveRoomListPage({Key? key}) : super(key: key);
 
-  // final ScrollController controller;
-
-  // const LiveRoomListPage({super.key, required this.controller});
-
   @override
   State<StatefulWidget> createState() => LiveRoomListPageState();
 }
 
 class LiveRoomListPageState extends State<LiveRoomListPage> {
   late TRTCLiveRoom trtcLiveRoomServer;
-  // List<RoomInfo> roomInfList = [];
-
-
-  String? userId = TrtcSDKManager.instance.localUser!.userId;
-  String? userName = TrtcSDKManager.instance.localUser!.userName;
-
-
-
-  List<dynamic> liveList = [];
-  List<dynamic> multiRoomList = [];
-  List<dynamic> singleRoomList = [];
-  List<dynamic> pkRoomList = [];
-
-
+  List<RoomInfo> roomInfList = [];
   openUrl(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -59,93 +34,61 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
     super.initState();
     //获取数据
     this.getRoomList();
-
   }
 
   @override
   dispose() {
     super.dispose();
   }
-    void separateRoomsByType() {
-    multiRoomList.clear();
-    singleRoomList.clear();
-    pkRoomList.clear();
-
-
-    
-
-    // for (var room in liveList) {  if (room['status'] == 'error111') return;
-    //   // final roomId = room['liveId'];
-    //   // if (roomId.startsWith('Room-group-')) {
-    //   //   multiRoomList.add(room);
-    //   //   print('--Added to multiRoomlist');
-    //   // } else if (roomId.startsWith('Room-solo-')) {
-    //   //   singleRoomList.add(room);
-    //   //   print('--Added to singleRoomlist');
-    //   // } else if (roomId.startsWith('Room-invite-') || roomId.startsWith('Room-random-')) {
-    //   //   pkRoomList.add(room);
-    //   //   print('--Added to pkRoomlist');
-    //   // }
-    // }
-
-  }
 
   getRoomList() async {
-
-    print('here is initate data====');
     trtcLiveRoomServer = await TRTCLiveRoom.sharedInstance();
-    String loginId = userId.toString();
-    
+    // String loginId = await TxUtils.getLoginUserId();
+    String loginId = '222';
+
     await trtcLiveRoomServer.login(
         GenerateTestUserSig.sdkAppId,
         loginId,
         await GenerateTestUserSig.genTestSig(loginId),
         TRTCLiveRoomConfig(useCDNFirst: false));
+    // var roomIdls = await YunApiHelper.getRoomList(roomType: 'liveRoom');
+    List<String> roomIdls = ['1234', '5678'];
 
-    //     isLoading = true;
-    // getAllLiveRooms().then((value) {
-    //   if (value[0]['status'] == 'error111') liveList = [];
-    //   else liveList = value;
-    //   print('Live lists ==> $value');
-    //   separateRoomsByType();
-    // }).catchError((e) {
-    //   toast(e.toString());
-    // });
-    // isLoading = false;
-    // setState(() {});
-    var totaLivelList = await getAllLiveRooms();
-
-    // var roomIdls = [];
-    if (totaLivelList.length>0) {
-    print('>>>>>>>>>>>>++++++>>>>>>>>>>>>'+totaLivelList.length.toString());
+    if (roomIdls.isEmpty) {
       setState(() {
-        liveList = totaLivelList;
+        roomInfList = [];
       });
+      return;
     }
-  // RoomInfoCallback resp = await trtcLiveRoomServer.getRoomInfos();
-  //   if (resp.code == 0) {
-  //     setState(() {
-  //       liveList = resp.list!;
-  //     });
-  //   } else {
-  //     TxUtils.showErrorToast(resp.desc, context);
-  //   }
+    RoomInfoCallback resp = await trtcLiveRoomServer.getRoomInfos(roomIdls);
+    if (resp.code == 0) {
+      print('here is room param testing' + resp.list.toString());
+      setState(() {
+        roomInfList = resp.list!;
+      });
+    } else {
+      TxUtils.showErrorToast(resp.desc, context);
+      print(
+          'here is room ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~param testing');
+    }
   }
 
-  goRoomInfoPage( roomInfo) async {
-    String? loginUserId = userId;
-    if (roomInfo.userId.toString() == loginUserId) {
+  goRoomInfoPage(RoomInfo roomInfo) async {
+    // String loginUserId = await TxUtils.getLoginUserId();
+    String loginUserId = '222';
+    // String loginUserId = await TxUtils.getLoginUserId();
+    print('OwnerID~<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<~' +
+        roomInfo.roomId.toString());
+
+    if (roomInfo.ownerId.toString() == loginUserId) {
       Navigator.pushReplacementNamed(
         context,
         "/liveRoom/roomAnchor",
         arguments: {
-        'liveId': roomInfo.liveId,
-        "userId": roomInfo.userId,
-        "roomName": roomInfo.roomName,
-        "userName": roomInfo.userName,
-        'isHost': roomInfo.isHost, 
-        'liveStatus':roomInfo.liveStatus,
-        'isNeedCreateRoom': false,
+          "ownerId": roomInfo.ownerId,
+          "roomName": roomInfo.roomName,
+          'roomId': roomInfo.roomId,
+          'isNeedCreateRoom': false,
         },
       );
       return;
@@ -154,21 +97,15 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
       context,
       "/liveRoom/roomAudience",
       arguments: {
-        'liveId': roomInfo.liveId,
-        "userId": roomInfo.userId,
+        'roomId': roomInfo.roomId,
+        "ownerId": roomInfo.ownerId,
         "roomName": roomInfo.roomName,
-        "userName": roomInfo.userName,
-        'isHost': roomInfo.isHost, 
-        'liveStatus':roomInfo.liveStatus,
-        'isNeedCreateRoom': true,
-
+        'isNeedCreateRoom': false,
       },
     );
   }
 
-  Widget buildRoomInfo(info) {
-
-    print('roominfo=>>>>>>>>>>>>>>'+info.toString());
+  Widget buildRoomInfo(RoomInfo info) {
     return InkWell(
       onTap: () {
         goRoomInfoPage(info);
@@ -180,16 +117,14 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
             decoration: BoxDecoration(
                 // border: Border.all(color: Colors.red, width: 2),
                 borderRadius: BorderRadius.all(Radius.circular(8)),
-
-                
-                // image: DecorationImage(
-                //   image: NetworkImage(
-                //     getAvatarUrlFromUserId(info.userId)
-                //   ),
-                //   fit: BoxFit.fitWidth,
-                // )
-                ),
-                // child:cachedImage(getAvatarUrlFromUserId(info.userId))
+                image: DecorationImage(
+                  image: NetworkImage(
+                    info.coverUrl != null && info.coverUrl != ''
+                        ? info.coverUrl
+                        : TxUtils.getRandoAvatarUrl(),
+                  ),
+                  fit: BoxFit.fitWidth,
+                )),
           ),
           Positioned(
             left: 10,
@@ -202,12 +137,11 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 3, bottom: 3),
                   constraints: BoxConstraints(maxWidth: 140),
-                  // child: Text(
-                  //   // Languages.of(context)!.onLineCount(info.memberCount!),
-                  //   // Languages.of(context)?.onLineCount(info?.memberCount);
-                  //   // overflow: TextOverflow.ellipsis,
-                  //   // style: TextStyle(color: Colors.white, fontSize: 14),
-                  // ),
+                  child: Text(
+                    Languages.of(context)!.onLineCount(info.memberCount!),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.white, fontSize: 14),
+                  ),
                 ),
               ],
             ),
@@ -221,7 +155,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  (info.userName == null ? info.userId : info.userName),
+                  (info.ownerName == null ? info.ownerId : info.ownerName)!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -241,7 +175,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  (info.roomName == null ? "--" : info.roomName),
+                  (info.roomName == null ? "--" : info.roomName)!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Colors.white,
@@ -257,13 +191,12 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
 
   @override
   Widget build(BuildContext context) {
-    int roomCount = liveList.length;
-    print('roomCount===> '+ liveList.toString());
+    int roomCount = roomInfList.length;
 
     return Scaffold(
       appBar: AppBar(
           title: Text(
-            "video interaction",
+            "视频互动",
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: true,
@@ -285,7 +218,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
                 Icons.contact_support,
                 color: Colors.black,
               ),
-              tooltip: Languages.of(context)?.helpTooltip,
+              tooltip: Languages.of(context)?.helpTooltip?? '',
               onPressed: () {
                 this.openUrl(
                     'https://cloud.tencent.com/document/product/647/57388');
@@ -312,7 +245,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
             emptyWidget: roomCount <= 0
                 ? Center(
                     child: Text(
-                      "No video interactive live room",
+                      "暂无视频互动直播间",
                       style: TextStyle(color: Colors.black),
                     ),
                   )
@@ -334,7 +267,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        var info = liveList[index];
+                        RoomInfo info = roomInfList[index];
                         return buildRoomInfo(info);
                       },
                       childCount: roomCount,
@@ -356,7 +289,7 @@ class LiveRoomListPageState extends State<LiveRoomListPage> {
             },
           )
         },
-        tooltip: "Create a Video Live Room",
+        tooltip: "创建视频互动房间",
         child: Icon(Icons.add),
       ),
     );

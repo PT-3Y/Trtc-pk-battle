@@ -75,8 +75,9 @@ dependencies:
   # tencent_im_sdk_plugin_web: ^0.3.2
   ###################################
   # tencent_trtc_cloud: 2.2.4
-  tencent_im_sdk_plugin: 3.9.0
-
+  # tencent_im_sdk_plugin: 3.9.0
+  tencent_cloud_chat_sdk: ^5.1.9
+  # tencent_cloud_chat_uikit: ^2.2.0
   ###################################
   replay_kit_launcher: ^0.3.0
   flutter_styled_toast: 2.0.0
@@ -88,8 +89,6 @@ dependencies:
   lottie: ^2.3.2
   country_picker: ^2.0.20
   permission_handler: ^10.4.3
-  encrypt: ^5.0.1
-
 
   flutter_localizations:
     sdk: flutter

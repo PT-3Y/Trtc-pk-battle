@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../base/UserEnum.dart';
 import 'package:socialv/utils/TxUtils.dart';
 import 'package:badges/badges.dart';
-import 'package:socialv/i10n/localization_intl.dart';
+import '../../../../i10n/localization_intl.dart';
 
 class RaiseHandInfo {
   /// 用户唯一标识
@@ -150,7 +150,7 @@ class _RoomBottomBarState extends State<RoomBottomBar> {
                                             : "assets/demo/images/after-HandUp.png",
                                     height: 30,
                                   ),
-                                ),                          
+                                ),
                               ),
                             ),
                           ],
@@ -178,7 +178,7 @@ class _RoomBottomBarState extends State<RoomBottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    String lastBtnUrl = "assets/demo/images/no-speaking.png";
+    String lastBtnUrl = "assets/images/no-speaking.png";
     if (UserType.Audience == widget.userType) {
       lastBtnUrl = hadHandUp
           ? "assets/demo/images/raiseHand.png"
@@ -231,7 +231,7 @@ class _RoomBottomBarState extends State<RoomBottomBar> {
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 // ignore: deprecated_member_use
                 child: IconButton(
-          icon: Icon(Icons.arrow_back_ios), 
+                  icon: Icon(Icons.arrow_back_ios),
                   // minWidth: 144,
                   color: Color.fromRGBO(0, 98, 227, 1),
                   // child: Text(
